@@ -1,0 +1,16 @@
+[package]
+name = "speech-encryption"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+speech-backend-common = { git = "https://github.com/usmonie/speech-backend-common" }
+
+e521_curve = { git = "https://github.com/Speech-W-Team/e521_curve" }
+enigma = { git = "https://github.com/Speech-W-Team/enigma" }
+
+async-trait = "0.1.68"
+num = "0.4.0"
+num-bigint-dig = "0.8.2"
