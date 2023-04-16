@@ -9,7 +9,7 @@ use speech_backend_common::domain::UseCase;
 use crate::models::requests::GenerateKeyPairRequest;
 use crate::models::result::GenerateKeyPairResult;
 
-struct GenerateKeyPairUseCase {}
+pub struct GenerateKeyPairUseCase {}
 
 #[async_trait]
 impl UseCase<GenerateKeyPairRequest, GenerateKeyPairResult> for GenerateKeyPairUseCase {
