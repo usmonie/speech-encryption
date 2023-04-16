@@ -1,4 +1,4 @@
-mod models;
+pub mod models;
 
 use async_trait::async_trait;
 use e521_curve::e521::Point;
