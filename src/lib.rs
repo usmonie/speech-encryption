@@ -3,11 +3,17 @@ pub mod models;
 use async_trait::async_trait;
 use e521_curve::e521::Point;
 use e521_curve::{generate_private_key, generate_public_key};
-use num_bigint_dig::BigInt;
+use num_bigint_dig::{BigInt};
 use speech_backend_common::ApiResult;
 use speech_backend_common::domain::UseCase;
 use crate::models::requests::GenerateKeyPairRequest;
 use crate::models::result::GenerateKeyPairResult;
+
+pub fn generate_random_key(size: u64) -> Vec<u8> {
+    let private_key: Vec<u8> = (0..size).map(|_| { rand::random::<u8>() }).collect();
+
+    private_key
+}
 
 pub struct GenerateKeyPairUseCase {}
 
