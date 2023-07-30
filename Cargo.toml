@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 speech-backend-common = { git = "https://github.com/usmonie/speech-backend-common" }
 
-e521_curve = { git = "https://github.com/Speech-W-Team/e521_curve" }
+e521_curve = { git = "https://github.com/usmonie/e521_curve" }
 enigma = { git = "https://github.com/Speech-W-Team/enigma" }
 
 aes = "0.8.2"
@@ -18,5 +18,5 @@ cbc = "0.1.2"
 
 async-trait = "0.1.68"
 num = "0.4.0"
-num-bigint-dig = "0.8.2"
+num-bigint = "0.4.3"
 rand = "0.8.5"

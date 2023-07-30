@@ -4,9 +4,9 @@ use aes::Aes256;
 use aes::cipher::{BlockDecrypt, KeyInit};
 use aes::cipher::generic_array::GenericArray;
 use async_trait::async_trait;
-use e521_curve::e521::Point;
 use e521_curve::{generate_private_key, generate_public_key};
-use num_bigint_dig::{BigInt};
+use e521_curve::e521::e521::{get_e521_point, Point};
+use num_bigint::BigInt;
 use speech_backend_common::ApiResult;
 use speech_backend_common::domain::UseCase;
 use crate::models::requests::GenerateKeyPairRequest;
@@ -23,12 +23,10 @@ impl UseCase<GenerateKeyPairRequest, GenerateKeyPairResult> for GenerateKeyPairU
     async fn execute(&self, request: GenerateKeyPairRequest) -> ApiResult<GenerateKeyPairResult> {
         let (private_key, public_key) = GenerateKeyPairUseCase::create_public_key();
 
+        let point = get_e521_point(request.x, request.y);
         let secret_key = GenerateKeyPairUseCase::create_secret_key(
             &private_key,
-            &Point {
-                x: request.x,
-                y: request.y,
-            },
+            &point,
         );
 
         ApiResult::Ok(GenerateKeyPairResult::from(public_key, secret_key))

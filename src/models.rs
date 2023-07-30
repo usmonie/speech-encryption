@@ -8,7 +8,7 @@ pub mod requests {
 }
 
 pub mod result {
-    use e521_curve::e521::Point;
+    use e521_curve::e521::e521::Point;
 
     pub struct GenerateKeyPairResult {
         pub public_key: Point,
