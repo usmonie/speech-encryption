@@ -1,5 +1,5 @@
 pub mod requests {
-    use num_bigint_dig::BigInt;
+    use num_bigint::BigInt;
 
     pub struct GenerateKeyPairRequest {
         pub x: BigInt,
