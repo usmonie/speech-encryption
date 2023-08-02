@@ -53,7 +53,7 @@ impl GenerateKeyPairUseCase {
 pub struct GenerateSecretKeyUseCase {}
 
 #[async_trait]
-impl UseCase<GenerateSecretKeyRequest, GenerateSecretKeyResult> for GenerateKeyPairUseCase {
+impl UseCase<GenerateSecretKeyRequest, GenerateSecretKeyResult> for GenerateSecretKeyUseCase {
     async fn execute(&self, request: GenerateSecretKeyRequest) -> ApiResult<GenerateSecretKeyResult> {
         let secret_key = GenerateKeyPairUseCase::create_secret_key(
             &request.private_key,
@@ -64,22 +64,6 @@ impl UseCase<GenerateSecretKeyRequest, GenerateSecretKeyResult> for GenerateKeyP
     }
 }
 
-impl GenerateKeyPairUseCase {
-    pub fn new() -> Self {
-        Self {}
-    }
-
-    pub fn create_secret_key(private_key: &BigInt, public_key: &Point) -> Vec<u8> {
-        let point = e521_curve::diffie_hellman(private_key, public_key);
-        e521_curve::generate_secret_key(point)
-    }
-
-    pub fn create_public_key() -> (BigInt, Point) {
-        let private_key: BigInt = generate_private_key();
-        let public_key_point: Point = generate_public_key(&private_key);
-        (private_key, public_key_point)
-    }
-}
 
 impl GenerateSecretKeyUseCase {
     pub fn new() -> Self {

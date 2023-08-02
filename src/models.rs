@@ -9,7 +9,7 @@ pub mod requests {
 
     pub struct GenerateSecretKeyRequest {
         pub public_key: Point,
-        pub private_key: Vec<u8>
+        pub private_key: BigInt
     }
 }
 
