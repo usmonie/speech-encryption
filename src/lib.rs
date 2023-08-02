@@ -9,8 +9,8 @@ use e521_curve::e521::e521::{get_e521_point, Point};
 use num_bigint::BigInt;
 use speech_backend_common::ApiResult;
 use speech_backend_common::domain::UseCase;
-use crate::models::requests::GenerateKeyPairRequest;
-use crate::models::result::GenerateKeyPairResult;
+use crate::models::requests::{GenerateKeyPairRequest, GenerateSecretKeyRequest};
+use crate::models::result::{GenerateKeyPairResult, GenerateSecretKeyResult};
 
 pub fn generate_random_key(size: u64) -> Vec<u8> {
     (0..size).map(|_| { rand::random::<u8>() }).collect()
@@ -47,6 +47,48 @@ impl GenerateKeyPairUseCase {
         let private_key: BigInt = generate_private_key();
         let public_key_point: Point = generate_public_key(&private_key);
         (private_key, public_key_point)
+    }
+}
+
+pub struct GenerateSecretKeyUseCase {}
+
+#[async_trait]
+impl UseCase<GenerateSecretKeyRequest, GenerateSecretKeyResult> for GenerateKeyPairUseCase {
+    async fn execute(&self, request: GenerateSecretKeyRequest) -> ApiResult<GenerateSecretKeyResult> {
+        let secret_key = GenerateKeyPairUseCase::create_secret_key(
+            &request.private_key,
+            &request.public_key,
+        );
+
+        ApiResult::Ok(GenerateSecretKeyResult::from(secret_key))
+    }
+}
+
+impl GenerateKeyPairUseCase {
+    pub fn new() -> Self {
+        Self {}
+    }
+
+    pub fn create_secret_key(private_key: &BigInt, public_key: &Point) -> Vec<u8> {
+        let point = e521_curve::diffie_hellman(private_key, public_key);
+        e521_curve::generate_secret_key(point)
+    }
+
+    pub fn create_public_key() -> (BigInt, Point) {
+        let private_key: BigInt = generate_private_key();
+        let public_key_point: Point = generate_public_key(&private_key);
+        (private_key, public_key_point)
+    }
+}
+
+impl GenerateSecretKeyUseCase {
+    pub fn new() -> Self {
+        Self {}
+    }
+
+    pub fn create_secret_key(private_key: &BigInt, public_key: &Point) -> Vec<u8> {
+        let point = e521_curve::diffie_hellman(private_key, public_key);
+        e521_curve::generate_secret_key(point)
     }
 }
 
